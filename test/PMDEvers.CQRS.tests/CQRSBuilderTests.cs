@@ -6,7 +6,9 @@ using Newtonsoft.Json;
 
 using PMDEvers.CQRS.Builder;
 using PMDEvers.CQRS.Factories;
+using PMDEvers.CQRS.InMemory;
 using PMDEvers.CQRS.Interfaces;
+using PMDEvers.Servicebus;
 
 using Xunit;
 
@@ -52,6 +54,21 @@ namespace PMDEvers.CQRS.tests
             var provider = container.BuildServiceProvider();
 
             Assert.Equal(serializer,  provider.GetService<IEventSerializer>());
+        }
+
+        [Fact]
+        public void AddAggregate_Registers_Repository()
+        {
+            var container = new ServiceCollection();
+            container.AddServiceBus();
+            container.AddCQRS()
+                     .AddAggregate<TestAggregate>()
+                     .AddInMemoryEventStore();
+
+            var provider = container.BuildServiceProvider();
+
+            Assert.NotNull(provider.GetService<IRepository<TestAggregate>>());
+
         }
 
         private object InstanceFactory(Type serviceType)
