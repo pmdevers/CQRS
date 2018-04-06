@@ -9,8 +9,9 @@ using PMDEvers.Servicebus;
 namespace PMDEvers.CQRS.Events
 {
     [Serializable]
-    public abstract class EventBase : IEvent
+    public class EventBase : IEvent
     {
+        private EventBase() { }
         protected EventBase(Guid aggregateId)
         {
             AggregateId = aggregateId;
@@ -19,12 +20,10 @@ namespace PMDEvers.CQRS.Events
             Username = Thread.CurrentPrincipal?.Identity?.Name ?? "Unknown";
         }
 
-        public string MessageType { get; }
-        public DateTimeOffset Timestamp { get; }
-        public Guid AggregateId { get; }
+        public string MessageType { get; private set;  }
+        public DateTimeOffset Timestamp { get; private set;}
+        public Guid AggregateId { get; private set; }
         public int Version { get; set; }
-        public string Username { get; }
-
-        public abstract override string ToString();
+        public string Username { get; private set;}
     }
 }

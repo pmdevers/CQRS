@@ -29,19 +29,19 @@ namespace PMDEvers.CQRS
 
         public async Task<T> GetCurrentStateAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var cached = _requestCache.FirstOrDefault(x => x.Id == id);
-            if (cached != null)
+            var aggregate = _requestCache.FirstOrDefault(x => x.Id == id);
+            if (aggregate != null)
             {
-                return cached;
+                return aggregate;
             }
 
-            var events = await _eventStore.FindByIdAsync(id, -1, cancellationToken);
+            var events = (await _eventStore.FindByIdAsync(id, -1, cancellationToken)).ToList();
             if (!events.Any())
             {
                 return null;
             }
 
-            var aggregate = (T)_aggregateInstanceFactory(typeof(T));
+            aggregate = (T)_aggregateInstanceFactory(typeof(T));
             aggregate.LoadFromHistory(events);
 
             _requestCache.Add(aggregate);

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -41,7 +42,6 @@ namespace PMDEvers.CQRS.tests
             var provider = container.BuildServiceProvider();
 
             Assert.Equal(InstanceFactory,  provider.GetService<AggregateInstanceFactory>());
-
         }
 
         [Fact]
@@ -69,6 +69,25 @@ namespace PMDEvers.CQRS.tests
 
             Assert.NotNull(provider.GetService<IRepository<TestAggregate>>());
 
+        }
+        [Fact]
+        public async Task Repository_CreatesNewAggregate()
+        {
+            var container = new ServiceCollection();
+            container.AddServiceBus();
+            container.AddCQRS()
+                     .AddAggregate<TestAggregate>()
+                     .AddInMemoryEventStore();
+
+            var provider = container.BuildServiceProvider();
+            var store = provider.GetService<IEventStore>();
+            var id = Guid.NewGuid();
+            await store.SaveAsync(new TestCreated(id, "test") { Version = 1 });
+            var repository = provider.GetService<IRepository<TestAggregate>>();
+
+            var aggregate = await repository.GetCurrentStateAsync(id);
+
+            Assert.NotNull(aggregate);
         }
 
         private object InstanceFactory(Type serviceType)

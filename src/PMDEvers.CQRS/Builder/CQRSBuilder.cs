@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,6 +39,12 @@ namespace PMDEvers.CQRS
             where TEvent : IEvent
             where TEventHandler : class
         {
+            var type = typeof(TEvent);
+            if (type.GetCustomAttribute(typeof(SerializableAttribute)) == null)
+            {
+                throw new Exception($"Event {type.Name} must be marked as serializable.");
+            }
+
             _serviceBusBuilder.AddEventHandler<TEvent, TEventHandler>();
             return this;
         }

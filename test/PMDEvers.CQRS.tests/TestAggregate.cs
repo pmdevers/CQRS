@@ -20,6 +20,7 @@ namespace PMDEvers.CQRS.tests
         }
     }
 
+    [Serializable]
     public class TestCreated : EventBase
     {
         public TestCreated(Guid id, string title)
@@ -38,10 +39,9 @@ namespace PMDEvers.CQRS.tests
 
     public class TestAggregate : AggregateRoot
     {
-
-        public TestAggregate(string title)
+        public TestAggregate()
         {
-            ApplyChange(new TestCreated(this.Id, title));
+            ApplyChange(new TestCreated(this.Id, "Test"));
         }
 
         public string Title { get; private set; }

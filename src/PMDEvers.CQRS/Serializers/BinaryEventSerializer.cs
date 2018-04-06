@@ -22,12 +22,12 @@ namespace PMDEvers.CQRS
                 bytes = memoryStream.ToArray();
             }
 
-            return Encoding.ASCII.GetString(bytes);
+            return ByteArrayToString(bytes);
         }
 
         public EventBase Deserializer(string data)
         {
-            var array = Encoding.ASCII.GetBytes(data);
+            var array = StringToByteArray(data);
             EventBase returnValue;
             using (var memoryStream = new MemoryStream(array))
             {
@@ -36,6 +36,24 @@ namespace PMDEvers.CQRS
             }
 
             return returnValue;
+        }
+
+
+        private string ByteArrayToString(byte[] ba)
+        {
+            var hex = new StringBuilder(ba.Length * 2);
+            foreach (byte b in ba)
+                hex.AppendFormat("{0:x2}", b);
+            return hex.ToString();
+        }
+
+        private byte[] StringToByteArray(String hex)
+        {
+            int NumberChars = hex.Length;
+            var bytes = new byte[NumberChars / 2];
+            for (var i = 0; i < NumberChars; i += 2)
+                bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+            return bytes;
         }
     }
 }

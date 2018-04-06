@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Pmdevers.CQRS\PMDEvers.CQRS.csproj" />
+    <ProjectReference Include="..\Pmdevers.CQRS\PMDEvers.CQRS.csproj" />
   </ItemGroup>
 
 </Project>
