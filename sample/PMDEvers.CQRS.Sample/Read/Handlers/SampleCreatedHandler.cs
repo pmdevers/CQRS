@@ -13,7 +13,7 @@ namespace PMDEvers.CQRS.Sample.Read.Handlers
     {
         public Task HandleAsync(SampleCreated @event, CancellationToken cancellationToken)
         {
-            
+            return Task.CompletedTask;
         }
     }
 }
