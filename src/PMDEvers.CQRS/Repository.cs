@@ -86,7 +86,7 @@ namespace PMDEvers.CQRS
             foreach (EventBase @event in events)
             {
                 await _eventStore.SaveAsync(@event, cancellationToken);
-                await _serviceBus.PublishAsync((dynamic)@event);
+                await _serviceBus.PublishAsync((dynamic)@event, cancellationToken);
             }
         }
     }

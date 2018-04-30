@@ -45,93 +45,20 @@ public void ConfigureServices(IServiceCollection services)
 }
 ```
 
-## 4. Adding your first domain aggregate
+__Please see the sample in the sample folder for a simple setup.__
 
-Create a new class which inherts from *AggregateRoot*
-
-``` csharp
-public class SampleAggregate : AggregateRoot {
-   ...
-}
-```
-
-To let the CQRS Library know that we have created a new aggregate add the following line to the configuration. 
-
-
-``` csharp
-public void ConfigureServices(IServiceCollection services)
-{
-    ...
-    // Add the CQRS services to the service collection
-    services.AddCQRS()
-            .AddAggregate<SampleAggregate>();
-    ...
-}
-```
-
-We also need a command to construct the aggregate.
-
-create a new class which inherts from *CommandBase*
-
-``` csharp
-public class CreateSample : CommandBase
-{
-    public CreateSample() : base(Guid.NewGuid())
-    {
-    }
-
-    public override bool IsValid()
-    {
-        return true;
-    }
-}
-```
-
-*The class __CommandBase__ requires a AggregateId in its constructor.*
-
-A __Command__ needs a __CommandHandler__
-
-create a new class whih inherts from ICancellableAsyncCommandHandler< CreateSample>
-
-```csharp
-public class CreateSampleHandler : ICancellableAsyncCommandHandler<CreateSample>
-{
-   private readonly IRepository<SampleAggregate> _repository;
-
-   public CreateSampleHandler(IRepository<SampleAggregate> repository)
-   {
-       _repository = repository;
-   }
-
-   public async Task HandleAsync(CreateSample command, CancellationToken cancellationToken = new CancellationToken())
-   {
-       cancellationToken.ThrowIfCancellationRequested();
-       if (!command.IsValid())
-       {
-           return;
-       }
-
-       var aggregate = new SampleAggregate();
-
-       await _repository.SaveAsync(aggregate, cancellationToken);
-   }
-}
-```
-
-
-
-## 5. Scaffolding 
+## 4. Scaffolding 
 
 We recommend using the following folders to structure youre domain.
 
 ```
     |--Sample
     |  |--Commands
-    |  |  |--CreateSampleCommand.cs
+    |  |  |--CreateSample.cs
     |  |--CommandHandlers	
-    |  |  |--CreateSampleCommandHandler.cs
+    |  |  |--CreateSampleHandler.cs
     |  |--Events
-    |  |  |--SampleCreatedEvent.cs
+    |  |  |--SampleCreated.cs
     |  |
     |  |--SampleAggregate.cs
 ```

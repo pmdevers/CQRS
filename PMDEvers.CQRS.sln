@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMDEvers.CQRS", "src\Pmdeve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMDEvers.CQRS.EntityFramework", "src\PMDEvers.CQRS.EntityFramework\PMDEvers.CQRS.EntityFramework.csproj", "{8AC20A00-E880-493F-90EF-044B678E63EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMDEvers.CQRS.tests", "test\PMDEvers.CQRS.tests\PMDEvers.CQRS.tests.csproj", "{6A48FEA9-7D5F-432B-9439-310188CD763E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMDEvers.CQRS.tests", "test\PMDEvers.CQRS.tests\PMDEvers.CQRS.tests.csproj", "{6A48FEA9-7D5F-432B-9439-310188CD763E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{1DC53A2A-813E-4AE0-A929-2B77265225AD}"
 EndProject
@@ -17,7 +17,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{89BB9FB1-EBB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMDEvers.CQRS.InMemory", "src\PMDEvers.CQRS.InMemory\PMDEvers.CQRS.InMemory.csproj", "{26268F1B-0A99-4A78-A587-179870DC5B81}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PMDEvers.CQRS.Sample", "sample\PMDEvers.CQRS.Sample\PMDEvers.CQRS.Sample.csproj", "{2C12067A-3124-423A-8249-C102FFC95CE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PMDEvers.CQRS.Sample", "sample\PMDEvers.CQRS.Sample\PMDEvers.CQRS.Sample.csproj", "{2C12067A-3124-423A-8249-C102FFC95CE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EAB7816-464E-43B4-A7D3-4637A505B811}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
