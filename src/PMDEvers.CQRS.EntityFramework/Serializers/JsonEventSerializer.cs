@@ -5,9 +5,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 using PMDEvers.CQRS.Events;
-using PMDEvers.CQRS.Interfaces;
 
-namespace PMDEvers.CQRS
+namespace PMDEvers.CQRS.EntityFramework.Serializers
 {
     public class JsonEventSerializer : IEventSerializer
     {

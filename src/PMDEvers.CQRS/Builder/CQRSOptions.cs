@@ -10,6 +10,5 @@ namespace PMDEvers.CQRS.Builder
     public class CQRSOptions
     {
         public AggregateInstanceFactory InstanceFactory { get; set; } = Activator.CreateInstance;
-        public IEventSerializer EventSerializer { get; set; } = new BinaryEventSerializer();
     }
 }

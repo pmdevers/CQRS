@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.EntityFrameworkCore;
 
+using PMDEvers.CQRS.EntityFramework.Serializers;
 using PMDEvers.CQRS.Events;
 using PMDEvers.CQRS.Interfaces;
 

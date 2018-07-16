@@ -26,8 +26,6 @@ namespace PMDEvers.CQRS.tests
             var provider = container.BuildServiceProvider();
 
             Assert.NotNull(provider.GetService<AggregateInstanceFactory>());
-            Assert.NotNull(provider.GetService<IEventSerializer>());
-            Assert.IsType<BinaryEventSerializer>(provider.GetService<IEventSerializer>());
         }
 
         [Fact]
@@ -42,18 +40,6 @@ namespace PMDEvers.CQRS.tests
             var provider = container.BuildServiceProvider();
 
             Assert.Equal(InstanceFactory,  provider.GetService<AggregateInstanceFactory>());
-        }
-
-        [Fact]
-        public void AddCQRS_Override_Serializer()
-        {
-            var serializer = new JsonEventSerializer();
-            var container = new ServiceCollection();
-            container.AddCQRS(options => { options.EventSerializer = serializer; });
-
-            var provider = container.BuildServiceProvider();
-
-            Assert.Equal(serializer,  provider.GetService<IEventSerializer>());
         }
 
         [Fact]

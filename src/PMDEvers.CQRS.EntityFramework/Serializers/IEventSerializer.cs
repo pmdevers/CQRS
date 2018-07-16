@@ -1,6 +1,6 @@
 ﻿using PMDEvers.CQRS.Events;
 
-namespace PMDEvers.CQRS.Interfaces
+namespace PMDEvers.CQRS.EntityFramework.Serializers
 {
     public interface IEventSerializer
     {

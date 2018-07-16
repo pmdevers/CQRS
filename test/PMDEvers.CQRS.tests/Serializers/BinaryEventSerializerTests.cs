@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
+using PMDEvers.CQRS.EntityFramework.Serializers;
+
 using Xunit;
 
 namespace PMDEvers.CQRS.tests.Serializers

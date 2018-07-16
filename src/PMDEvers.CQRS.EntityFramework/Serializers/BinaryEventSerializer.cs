@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 using PMDEvers.CQRS.Events;
-using PMDEvers.CQRS.Interfaces;
 
-namespace PMDEvers.CQRS
+namespace PMDEvers.CQRS.EntityFramework.Serializers
 {
     public class BinaryEventSerializer : IEventSerializer
     {

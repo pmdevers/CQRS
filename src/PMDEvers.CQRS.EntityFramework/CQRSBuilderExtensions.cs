@@ -9,9 +9,14 @@ namespace PMDEvers.CQRS.EntityFramework
 {
     public static class CQRSBuilderExtensions
     {
-        public static CQRSBuilder AddEntityFramework(this CQRSBuilder builder, Action<DbContextOptionsBuilder> options = null)
+        public static CQRSBuilder AddEntityFramework(this CQRSBuilder builder, Action<CQRSEntityFrameworkOptions> options = null)
         {
-            builder.Services.AddDbContext<EventContext>(options);
+            var option = new CQRSEntityFrameworkOptions();
+            options?.Invoke(option);
+
+            builder.Services.AddSingleton(x => option.EventSerializer);
+            builder.Services.AddDbContext<EventContext>(option.ContextOptions);
+
             return builder.AddEventStore<EventStore>();
         }
     }

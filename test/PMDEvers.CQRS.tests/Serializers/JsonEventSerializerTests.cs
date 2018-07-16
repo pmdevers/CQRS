@@ -6,6 +6,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
+using PMDEvers.CQRS.EntityFramework.Serializers;
+
 using Xunit;
 
 namespace PMDEvers.CQRS.tests.Serializers
@@ -24,7 +26,7 @@ namespace PMDEvers.CQRS.tests.Serializers
             var obj = JObject.Parse(result);
 
             Assert.Equal(testEvent.AggregateId, Guid.Parse(obj["AggregateId"].Value<string>()));
-            Assert.Equal(testEvent.Title, obj["Title"].Value<String>());
+            Assert.Equal(testEvent.Title, obj["Title"].Value<string>());
             Assert.Equal(testEvent.Version, obj["Version"].Value<int>());
             Assert.Equal(testEvent.MessageType, obj["MessageType"].Value<string>());
             Assert.Equal(testEvent.Timestamp, obj["Timestamp"].Value<DateTime>());
