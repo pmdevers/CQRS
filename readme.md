@@ -1,3 +1,5 @@
+[![BCH compliance](https://bettercodehub.com/edge/badge/pmdevers/CQRS?branch=master)](https://bettercodehub.com/)
+
 Command & Query Responsibility Segregation library
 =====
 
