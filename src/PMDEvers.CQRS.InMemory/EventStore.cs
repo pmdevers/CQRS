@@ -34,19 +34,19 @@ namespace PMDEvers.CQRS.InMemory
         public Task<IEnumerable<EventBase>> FindByIdAsync(Guid aggregateId, int fromVersion, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return Task.FromResult(_events.Where(x => x.AggregateId == aggregateId && x.Version >= fromVersion));
+            return Task.FromResult((IEnumerable<EventBase>)_events.Where(x => x.AggregateId == aggregateId && x.Version >= fromVersion).OrderBy(x => x.Version));
         }
 
         public Task<IEnumerable<EventBase>> FindByHistoryAsync(Guid aggregateId, int tillVersion, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return Task.FromResult(_events.Where(x => x.AggregateId == aggregateId && x.Version <= tillVersion));
+            return Task.FromResult((IEnumerable<EventBase>)_events.Where(x => x.AggregateId == aggregateId && x.Version <= tillVersion).OrderBy(x => x.Version));
         }
 
         public Task<IEnumerable<EventBase>> FindAllAsync(DateTime tillDate, CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
-            return Task.FromResult(_events.Where(x => x.Timestamp <= tillDate));
+            return Task.FromResult((IEnumerable<EventBase>)_events.Where(x => x.Timestamp <= tillDate).OrderBy(x => x.Version));
         }
     }
 }
