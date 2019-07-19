@@ -8,7 +8,7 @@ namespace PMDEvers.CQRS.Exceptions
 {
     public class InvalidCommandException : Exception
     {
-        public InvalidCommandException(ValidationResult validatinResult, Type commandType)
+        public InvalidCommandException(ValidationResult validationResult, Type commandType)
             : base($"Command: '{commandType.Name}' is Invalid")
         {
         }
