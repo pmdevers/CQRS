@@ -1,8 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
-
+    <TargetFramework>netstandard2.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -20,12 +19,6 @@
     <ProjectReference Include="..\..\src\PMDEvers.CQRS.EntityFramework\PMDEvers.CQRS.EntityFramework.csproj" />
     <ProjectReference Include="..\..\src\PMDEvers.CQRS.InMemory\PMDEvers.CQRS.InMemory.csproj" />
     <ProjectReference Include="..\..\src\Pmdevers.CQRS\PMDEvers.CQRS.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.Extensions.DependencyInjection">
-      <HintPath>C:\Users\p.evers\.nuget\packages\microsoft.extensions.dependencyinjection\2.0.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
