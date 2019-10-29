@@ -28,7 +28,7 @@ namespace PMDEvers.CQRS.TestTools
         {
             Aggregate = (TAggregate)InstanceFactory().Invoke(typeof(TAggregate));
             Aggregate.LoadFromHistory(Given());
-
+            Setup();
             MockRepository.Setup(x => x.GetStateAsync(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
                           .ReturnsAsync(Aggregate);
 
@@ -55,6 +55,12 @@ namespace PMDEvers.CQRS.TestTools
         {
             return new List<EventBase>();
         }
+
+        protected virtual void Setup()
+        {
+
+        }
+
         protected abstract AggregateInstanceFactory InstanceFactory();
         protected abstract TCommand When();
         protected abstract ICommandHandler<TCommand> CommandHandler();

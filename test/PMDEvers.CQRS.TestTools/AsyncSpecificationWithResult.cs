@@ -31,11 +31,11 @@ namespace PMDEvers.CQRS.TestTools
             Aggregate = (TAggregate)InstanceFactory().Invoke(typeof(TAggregate));
             Aggregate.LoadFromHistory(Given());
 
+            Setup();
+
             MockRepository.Setup(x => x.GetStateAsync(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
                           .ReturnsAsync(Aggregate);
-
             
-
             MockRepository.Setup(x => x.SaveAsync(It.IsAny<TAggregate>(), It.IsAny<CancellationToken>()))
                           .Callback<TAggregate, CancellationToken>((a, t) => Aggregate = a)
                           .Returns(Task.CompletedTask);
@@ -55,10 +55,17 @@ namespace PMDEvers.CQRS.TestTools
             }
         }
 
+
         protected virtual IEnumerable<EventBase> Given()
         {
             return new List<EventBase>();
         }
+
+        protected virtual void Setup()
+        {
+
+        }
+
         protected abstract AggregateInstanceFactory InstanceFactory();
         protected abstract TCommand When();
         protected abstract IAsyncCommandHandler<TCommand,TResult> CommandHandler();

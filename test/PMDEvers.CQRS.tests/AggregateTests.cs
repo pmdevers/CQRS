@@ -62,4 +62,29 @@ namespace PMDEvers.CQRS.tests
             Assert.NotEqual(Guid.Empty, res);
         }
     }
+
+    public class CancellableAsyncAggregateCreate : CancellableAsyncSpecificationWithResult<Aggregate, CreateCommand, Guid>
+    {
+        protected override AggregateInstanceFactory InstanceFactory()
+        {
+            return Activator.CreateInstance;
+        }
+
+        protected override CreateCommand When()
+        {
+            return new CreateCommand();
+        }
+
+        protected override ICancellableAsyncCommandHandler<CreateCommand, Guid> CommandHandler()
+        {
+            return new CancellableCreateCommandHandler(MockRepository.Object);
+        }
+
+        [Fact]
+        public void Then()
+        {
+            var res = Result;
+            Assert.NotEqual(Guid.Empty, res);
+        }
+    }
 }

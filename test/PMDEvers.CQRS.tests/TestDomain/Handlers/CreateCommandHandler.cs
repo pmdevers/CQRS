@@ -11,6 +11,7 @@ namespace PMDEvers.CQRS.tests.TestDomain.Handlers
     public class CreateCommandHandler : 
         ICommandHandler<CreateCommand, Guid>,
         IAsyncCommandHandler<CreateCommand, Guid>
+        
     {
         private readonly IRepository<Aggregate> _repository;
 
@@ -30,6 +31,23 @@ namespace PMDEvers.CQRS.tests.TestDomain.Handlers
         {
             var a = Aggregate.Create();
             await _repository.SaveAsync(a, CancellationToken.None);
+            return a.Id;
+        }
+    }
+
+    public class CancellableCreateCommandHandler : ICancellableAsyncCommandHandler<CreateCommand, Guid>
+    {
+        private readonly IRepository<Aggregate> _repository;
+
+        public CancellableCreateCommandHandler(IRepository<Aggregate> repository)
+        {
+            _repository = repository;
+        }
+
+        public async Task<Guid> HandleAsync(CreateCommand command, CancellationToken cancellationToken = new CancellationToken())
+        {
+            var a = Aggregate.Create();
+            await _repository.SaveAsync(a, cancellationToken);
             return a.Id;
         }
     }
