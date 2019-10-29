@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 using Moq;
 
@@ -32,11 +34,15 @@ namespace PMDEvers.CQRS.TestTools
             MockRepository.Setup(x => x.GetStateAsync(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
                           .ReturnsAsync(Aggregate);
 
+            
+
             MockRepository.Setup(x => x.SaveAsync(It.IsAny<TAggregate>(), It.IsAny<CancellationToken>()))
-                          .Callback<TAggregate, CancellationToken>((a, t) => Aggregate = a);
+                          .Callback<TAggregate, CancellationToken>((a, t) => Aggregate = a)
+                          .Returns(Task.CompletedTask);
 
             MockServiceBus.Setup(x => x.PublishAsync(It.IsAny<EventBase>(), It.IsAny<CancellationToken>()))
-                          .Callback<EventBase, CancellationToken>((e, t) => _publishedEvents.Add(e));
+                          .Callback<EventBase, CancellationToken>((e, t) => _publishedEvents.Add(e))
+                          .Returns(Task.CompletedTask);
 
 
             try

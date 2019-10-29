@@ -1,42 +1,65 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Collections.Immutable;
-//using System.Linq;
-//using System.Net.Http.Headers;
-//using System.Text;
+﻿
+using System;
+using System.Threading.Tasks;
 
-//using AutoFixture;
+using PMDEvers.CQRS.Factories;
+using PMDEvers.CQRS.tests.TestDomain;
+using PMDEvers.CQRS.tests.TestDomain.Commands;
+using PMDEvers.CQRS.tests.TestDomain.Handlers;
+using PMDEvers.CQRS.TestTools;
+using PMDEvers.Servicebus;
 
-//using Moq;
+using Xunit;
 
-//using PMDEvers.CQRS.Events;
-//using PMDEvers.CQRS.Factories;
-//using PMDEvers.CQRS.TestTools;
-//using PMDEvers.Servicebus;
+namespace PMDEvers.CQRS.tests
+{
+    public class AggregateCreate : SpecificationWithResult<Aggregate, CreateCommand, Guid>
+    {
+        protected override AggregateInstanceFactory InstanceFactory()
+        {
+            return Activator.CreateInstance;
+        }
 
-//using Xunit;
+        protected override CreateCommand When()
+        {
+            return new CreateCommand();
+        }
 
-//namespace PMDEvers.CQRS.tests
-//{
+        protected override ICommandHandler<CreateCommand, Guid> CommandHandler()
+        {
+            return new CreateCommandHandler(MockRepository.Object);
+        }
 
-//    public class AggregateTests
-//    {
-//        [Fact]
-//        public void AuditTests()
-//        {
-//            var fixture = new Fixture();
-//            var test = fixture.Create<Mock<Aggregate>>();
+        [Fact]
+        public void Then()
+        {
+            Assert.NotEqual(Guid.Empty, Result);
+        }
+    }
 
-//            var createEvent = fixture.Create<Mock<>>();
 
-//            var events = new[] { TestCreated. };
+    public class AsyncAggregateCreate : AsyncSpecificationWithResult<Aggregate, CreateCommand, Guid>
+    {
+        protected override AggregateInstanceFactory InstanceFactory()
+        {
+            return Activator.CreateInstance;
+        }
 
-//            test.LoadFromHistory(events);
+        protected override CreateCommand When()
+        {
+            return new CreateCommand();
+        }
 
-//            Assert.Equal(events.First().Timestamp, test.CreationDate);
-//            Assert.Equal(events.First().Username, test.CreatedBy);
-//            Assert.Equal(events.Last().Timestamp, test.LastModifiedDate);
-//            Assert.Equal(events.Last().Username, test.LastModifiedBy);
-//        }
-//    }
-//}
+        protected override IAsyncCommandHandler<CreateCommand, Guid> CommandHandler()
+        {
+            return new CreateCommandHandler(MockRepository.Object);
+        }
+
+        [Fact]
+        public void Then()
+        {
+            var res = Result;
+            Assert.NotEqual(Guid.Empty, res);
+        }
+    }
+}
