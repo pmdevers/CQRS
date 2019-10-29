@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 
 using Moq;
 
@@ -13,18 +12,19 @@ using PMDEvers.Servicebus;
 
 namespace PMDEvers.CQRS.TestTools
 {
-   public abstract class CancellableAsyncSpecification<TAggregate, TCommand>
-        where TCommand : CommandBase
+    public abstract class SpecificationWithResult<TAggregate, TCommand, TResult>
+        where TCommand : CommandBase<TResult>
         where TAggregate : AggregateRoot
     {
         protected TAggregate Aggregate;
-        protected Mock<ICancellableAsyncEventHandler<ErrorOccourd>> MockEventHandler;
+        protected TResult Result;
+        protected Mock<IEventHandler<ErrorOccourd>> MockEventHandler;
         protected readonly Mock<IRepository<TAggregate>> MockRepository = new Mock<IRepository<TAggregate>>();
         protected readonly Mock<IServiceBus> MockServiceBus = new Mock<IServiceBus>();
         private readonly List<EventBase> _publishedEvents = new List<EventBase>();
         protected Exception CaugthException { get; }
 
-        protected CancellableAsyncSpecification()
+        protected SpecificationWithResult()
         {
             Aggregate = (TAggregate)InstanceFactory().Invoke(typeof(TAggregate));
             Aggregate.LoadFromHistory(Given());
@@ -41,7 +41,7 @@ namespace PMDEvers.CQRS.TestTools
 
             try
             {
-                CommandHandler().HandleAsync(When());
+                Result = CommandHandler().Handle(When());
             }
             catch (Exception exception)
             {
@@ -55,6 +55,6 @@ namespace PMDEvers.CQRS.TestTools
         }
         protected abstract AggregateInstanceFactory InstanceFactory();
         protected abstract TCommand When();
-        protected abstract ICancellableAsyncCommandHandler<TCommand> CommandHandler();
+        protected abstract ICommandHandler<TCommand,TResult> CommandHandler();
     }
 }
