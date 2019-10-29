@@ -30,6 +30,10 @@ namespace PMDEvers.CQRS.TestTools
             Aggregate = (TAggregate)InstanceFactory().Invoke(typeof(TAggregate));
             Aggregate.LoadFromHistory(Given());
             Setup();
+
+            MockRepository.Setup(x => x.GetCurrentStateAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                          .ReturnsAsync(Aggregate);
+
             MockRepository.Setup(x => x.GetStateAsync(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
                           .ReturnsAsync(Aggregate);
 
