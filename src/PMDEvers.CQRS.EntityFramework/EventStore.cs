@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,9 +29,17 @@ namespace PMDEvers.CQRS.EntityFramework
             _context.Dispose();
         }
 
-        public async Task SaveAsync(EventBase @event, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task SaveAsync(EventBase @event, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
+
+            var existing = await _context.Events.FirstOrDefaultAsync(x => 
+                x.AggregateId == @event.AggregateId && 
+                x.Version == @event.Version, cancellationToken);
+
+            if(existing != null)
+                throw new EventCollisionException(@event.AggregateId, @event.Version);
+
             var storeEvent = new Event
             {
                 Id = Guid.NewGuid(),
@@ -45,7 +54,7 @@ namespace PMDEvers.CQRS.EntityFramework
         }
 
         public async Task<IEnumerable<EventBase>> FindByIdAsync(Guid aggregateId, int fromVersion,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var result = (await _context.Events.Where(x => x.AggregateId == aggregateId && x.Version >= fromVersion)
                                         .ToListAsync(cancellationToken))
@@ -56,7 +65,7 @@ namespace PMDEvers.CQRS.EntityFramework
         }
 
         public async Task<IEnumerable<EventBase>> FindByHistoryAsync(Guid aggregateId, int tillVersion,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var result = (await _context.Events.Where(x => x.AggregateId == aggregateId && x.Version <= tillVersion)
                                         .ToListAsync(cancellationToken))
@@ -67,7 +76,7 @@ namespace PMDEvers.CQRS.EntityFramework
         }
 
         public async Task<IEnumerable<EventBase>> FindAllAsync(DateTime tillDate,
-            CancellationToken cancellationToken = default(CancellationToken))
+            CancellationToken cancellationToken = default)
         {
             var result = (await _context.Events.Where(x => x.TimeStamp <= tillDate)
                                         .ToListAsync(cancellationToken))
