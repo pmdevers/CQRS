@@ -5,33 +5,33 @@ using Microsoft.Extensions.DependencyInjection;
 
 using PMDEvers.CQRS.Interfaces;
 using PMDEvers.Servicebus;
+using PMDEvers.Servicebus.Interfaces;
 
 namespace PMDEvers.CQRS
 {
     public class CQRSBuilder
     {
-        private readonly IServiceCollection _services;
         private readonly ServiceBusBuilder _serviceBusBuilder;
 
-        public IServiceCollection Services => _services;
+        public IServiceCollection Services { get; }
 
         public CQRSBuilder(IServiceCollection services)
         {
-            _services = services ?? throw new ArgumentNullException(nameof(services));
+            Services = services ?? throw new ArgumentNullException(nameof(services));
             _serviceBusBuilder = new ServiceBusBuilder(services);
         }
 
         public CQRSBuilder AddEventStore<TEventStore>()
             where TEventStore : class, IEventStore
         {
-            _services.AddScoped<IEventStore, TEventStore>();
+            Services.AddScoped<IEventStore, TEventStore>();
             return this;
         }
 
         public CQRSBuilder AddAggregate<TAggregate>()
             where TAggregate : AggregateRoot
         {
-            _services.AddScoped<IRepository<TAggregate>, Repository<TAggregate>>();
+            Services.AddScoped<IRepository<TAggregate>, Repository<TAggregate>>();
             return this;
         }
 
@@ -53,6 +53,14 @@ namespace PMDEvers.CQRS
             where TCommandHandler : class
         {
             _serviceBusBuilder.AddCommandHandler<TCommand, TCommandHandler>();
+            return this;
+        }
+
+        public CQRSBuilder AddQueryHandler<TQuery, TResult, TQueryHandler>()
+            where TQuery : class, IQuery<TResult>
+            where TQueryHandler : class
+        {
+            _serviceBusBuilder.AddQueryHandler<TQuery, TResult, TQueryHandler>();
             return this;
         }
     }
