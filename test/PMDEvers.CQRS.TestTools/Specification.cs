@@ -7,7 +7,6 @@ using Moq;
 
 using PMDEvers.CQRS.Commands;
 using PMDEvers.CQRS.Events;
-using PMDEvers.CQRS.Factories;
 using PMDEvers.CQRS.Interfaces;
 using PMDEvers.Servicebus;
 
@@ -26,7 +25,7 @@ namespace PMDEvers.CQRS.TestTools
 
         protected Specification()
         {
-            Aggregate = (TAggregate)InstanceFactory().Invoke(typeof(TAggregate));
+            Aggregate = Activator.CreateInstance<TAggregate>();
             Aggregate.LoadFromHistory(Given());
             Setup();
 
@@ -65,7 +64,6 @@ namespace PMDEvers.CQRS.TestTools
 
         }
 
-        protected abstract AggregateInstanceFactory InstanceFactory();
         protected abstract TCommand When();
         protected abstract ICommandHandler<TCommand> CommandHandler();
     }

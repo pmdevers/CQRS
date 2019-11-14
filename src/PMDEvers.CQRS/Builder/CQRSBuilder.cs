@@ -32,6 +32,7 @@ namespace PMDEvers.CQRS
             where TAggregate : AggregateRoot
         {
             Services.AddScoped<IRepository<TAggregate>, Repository<TAggregate>>();
+            Services.AddScoped<ISnapshotStore<TAggregate>, SnapShotter<TAggregate>>();
             return this;
         }
 

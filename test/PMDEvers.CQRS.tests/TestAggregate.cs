@@ -39,9 +39,11 @@ namespace PMDEvers.CQRS.tests
 
     public class TestAggregate : AggregateRoot
     {
-        public TestAggregate()
+        public static TestAggregate Create()
         {
-            ApplyChange(new TestCreated(this.Id, "Test"));
+            var t = new TestAggregate();
+            t.ApplyChange(new TestCreated(t.Id, "Test"));
+            return t;
         }
 
         public string Title { get; private set; }

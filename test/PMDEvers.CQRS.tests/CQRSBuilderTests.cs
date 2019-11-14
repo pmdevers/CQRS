@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 using PMDEvers.CQRS.Builder;
-using PMDEvers.CQRS.Factories;
 using PMDEvers.CQRS.InMemory;
 using PMDEvers.CQRS.Interfaces;
 using PMDEvers.Servicebus;
@@ -24,22 +23,17 @@ namespace PMDEvers.CQRS.tests
             container.AddCQRS();
 
             var provider = container.BuildServiceProvider();
-
-            Assert.NotNull(provider.GetService<AggregateInstanceFactory>());
         }
-
         [Fact]
         public void AddCQRS_Override_Factory()
         {
             var container = new ServiceCollection();
             container.AddCQRS(options =>
             {
-                options.InstanceFactory = InstanceFactory;
             });
 
             var provider = container.BuildServiceProvider();
 
-            Assert.Equal(InstanceFactory,  provider.GetService<AggregateInstanceFactory>());
         }
 
         [Fact]

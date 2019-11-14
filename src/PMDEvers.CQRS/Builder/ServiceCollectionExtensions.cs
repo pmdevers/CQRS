@@ -16,8 +16,6 @@ namespace PMDEvers.CQRS.Builder
 
             var builder = new CQRSBuilder(services);
 
-            services.AddSingleton(x => opt.InstanceFactory);
-
             builder.AddEventHandler<ErrorOccourd, ErrorOccuredEventHandler>();
 
             return builder;

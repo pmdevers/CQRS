@@ -2,7 +2,6 @@
 using System;
 using System.Threading.Tasks;
 
-using PMDEvers.CQRS.Factories;
 using PMDEvers.CQRS.tests.TestDomain;
 using PMDEvers.CQRS.tests.TestDomain.Commands;
 using PMDEvers.CQRS.tests.TestDomain.Handlers;
@@ -15,11 +14,6 @@ namespace PMDEvers.CQRS.tests
 {
     public class AggregateCreate : SpecificationWithResult<Aggregate, CreateCommand, Guid>
     {
-        protected override AggregateInstanceFactory InstanceFactory()
-        {
-            return Activator.CreateInstance;
-        }
-
         protected override CreateCommand When()
         {
             return new CreateCommand();
@@ -40,11 +34,6 @@ namespace PMDEvers.CQRS.tests
 
     public class AsyncAggregateCreate : AsyncSpecificationWithResult<Aggregate, CreateCommand, Guid>
     {
-        protected override AggregateInstanceFactory InstanceFactory()
-        {
-            return Activator.CreateInstance;
-        }
-
         protected override CreateCommand When()
         {
             return new CreateCommand();
@@ -65,11 +54,6 @@ namespace PMDEvers.CQRS.tests
 
     public class CancellableAsyncAggregateCreate : CancellableAsyncSpecificationWithResult<Aggregate, CreateCommand, Guid>
     {
-        protected override AggregateInstanceFactory InstanceFactory()
-        {
-            return Activator.CreateInstance;
-        }
-
         protected override CreateCommand When()
         {
             return new CreateCommand();
