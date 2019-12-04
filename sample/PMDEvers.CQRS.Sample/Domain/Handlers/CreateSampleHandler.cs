@@ -27,7 +27,7 @@ namespace PMDEvers.CQRS.Sample.Domain.Handlers
                 return;
             }
 
-            var aggregate = new SampleAggregate();
+            var aggregate = SampleAggregate.Create();
 
             await _repository.SaveAsync(aggregate, cancellationToken);
         }
