@@ -17,13 +17,12 @@ namespace PMDEvers.CQRS.Events
             AggregateId = aggregateId;
             MessageType = GetType().Name;
             Timestamp = DateTimeOffset.UtcNow;
-            Username = Thread.CurrentPrincipal?.Identity?.Name ?? "Unknown";
         }
 
         public string MessageType { get; private set;  }
         public DateTimeOffset Timestamp { get; private set;}
         public Guid AggregateId { get; private set; }
         public int Version { get; set; }
-        public string Username { get; private set;}
+        public string Username { get; set;}
     }
 }
