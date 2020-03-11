@@ -17,14 +17,16 @@ namespace PMDEvers.CQRS
     {
         private readonly IServiceBus _serviceBus;
         private readonly AggregateInstanceFactory _aggregateInstanceFactory;
+        private readonly UsernameAccessor _usernameAccessor;
         private readonly IEventStore _eventStore;
         private readonly IList<T> _requestCache = new List<T>();
 
-        public Repository(IEventStore eventStore, IServiceBus serviceBus, AggregateInstanceFactory aggregateInstanceFactory)
+        public Repository(IEventStore eventStore, IServiceBus serviceBus, AggregateInstanceFactory aggregateInstanceFactory, UsernameAccessor usernameAccessor)
         {
             _eventStore = eventStore;
             _serviceBus = serviceBus;
             _aggregateInstanceFactory = aggregateInstanceFactory;
+            _usernameAccessor = usernameAccessor;
         }
 
         public async Task<T> GetCurrentStateAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken))
@@ -85,6 +87,7 @@ namespace PMDEvers.CQRS
             var events = aggregate.FlushUncommittedChanges();
             foreach (EventBase @event in events)
             {
+                @event.Username = _usernameAccessor.Invoke();
                 await _eventStore.SaveAsync(@event, cancellationToken);
                 await _serviceBus.PublishAsync((dynamic)@event, cancellationToken);
             }

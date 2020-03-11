@@ -23,7 +23,8 @@ namespace PMDEvers.CQRS.Sample
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddServiceBus();
-            services.AddCQRS()
+            
+            services.AddCQRS(opt => opt.UsernameAccessor = () => "New User")
                     .AddAggregate<SampleAggregate>()
                     .AddCommandHandler<CreateSample, CreateSampleHandler>()
                     .AddInMemoryEventStore();
