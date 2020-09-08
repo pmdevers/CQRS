@@ -14,7 +14,7 @@ namespace PMDEvers.CQRS.Builder
             UsernameAccessor = () => UnknownUsername;
         }
         public string UnknownUsername { get; set; } = "Unknown";
-        public AggregateInstanceFactory InstanceFactory { get; set; } = Activator.CreateInstance;
+        public AggregateInstanceFactory InstanceFactory { get; set; }
         public UsernameAccessor UsernameAccessor { get; set; }
     }
 }

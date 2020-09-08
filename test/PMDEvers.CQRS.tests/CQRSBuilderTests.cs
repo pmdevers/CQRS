@@ -76,6 +76,30 @@ namespace PMDEvers.CQRS.tests
             Assert.NotNull(aggregate);
         }
 
+        [Fact]
+        public async Task Repository_CreateReturnsNewAggregate()
+        {
+            var container = new ServiceCollection();
+            container.AddServiceBus();
+            container.AddCQRS()
+                .AddAggregate<ComplexAggregate>()
+                .AddInMemoryEventStore();
+
+            var provider = container.BuildServiceProvider();
+
+            var repository = provider.GetService<IRepository<ComplexAggregate>>();
+
+            var result = await repository.Create();
+
+            await repository.SaveAsync(result);
+
+            var store = provider.GetService<IEventStore>();
+
+            var test = await repository.GetCurrentStateAsync(result.Id);
+
+            Assert.NotNull(result);
+        }
+
         private object InstanceFactory(Type serviceType)
         {
             return new object();

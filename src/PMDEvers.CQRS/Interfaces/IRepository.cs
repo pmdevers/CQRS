@@ -14,5 +14,7 @@ namespace PMDEvers.CQRS.Interfaces
         Task<TState> GetStateAsync(Guid id, int expectedVersion, CancellationToken cancellationToken = default(CancellationToken));
 
         Task SaveAsync(TState aggregate, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<TState> Create(CancellationToken cancellationToken = default(CancellationToken));
     }
 }

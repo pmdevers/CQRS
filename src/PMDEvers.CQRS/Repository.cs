@@ -92,5 +92,18 @@ namespace PMDEvers.CQRS
                 await _serviceBus.PublishAsync((dynamic)@event, cancellationToken);
             }
         }
+
+        public Task<T> Create(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var aggregate = (T) _aggregateInstanceFactory.Invoke(typeof(T));
+            var createEvent = new AggregateCreated(aggregate.Id)
+            {
+                Username = _usernameAccessor.Invoke(),
+                Version = 1
+            };
+
+            aggregate.ApplyChange(createEvent);
+            return Task.FromResult(aggregate);
+        }
     }
 }
