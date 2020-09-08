@@ -31,6 +31,7 @@ namespace PMDEvers.CQRS
         public CQRSBuilder AddAggregate<TAggregate>()
             where TAggregate : AggregateRoot
         {
+            Services.AddScoped<TAggregate>();
             Services.AddScoped<IRepository<TAggregate>, Repository<TAggregate>>();
             return this;
         }

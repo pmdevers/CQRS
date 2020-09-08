@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using PMDEvers.CQRS.EventHandlers;
 using PMDEvers.CQRS.Events;
+using PMDEvers.CQRS.Factories;
 
 namespace PMDEvers.CQRS.Builder
 {
@@ -16,7 +17,15 @@ namespace PMDEvers.CQRS.Builder
 
             var builder = new CQRSBuilder(services);
 
-            services.AddSingleton(x => opt.InstanceFactory);
+            if (opt.InstanceFactory == null)
+            {
+                services.AddSingleton<AggregateInstanceFactory>(x => x.GetService);
+            }
+            else
+            {
+                services.AddSingleton(x => opt.InstanceFactory);
+            }
+            
             services.AddSingleton(x => opt.UsernameAccessor);
 
             builder.AddEventHandler<ErrorOccourd, ErrorOccuredEventHandler>();
