@@ -26,7 +26,8 @@ namespace PMDEvers.CQRS.Sample.Application.Handlers
                 return new SampleResponse()
                 {
                     Id = query.SampleId,
-                    Username = ""
+                    Username = "",
+                    Value = string.Empty
                 };
             }
 
@@ -36,6 +37,7 @@ namespace PMDEvers.CQRS.Sample.Application.Handlers
             {
                 Id = sample.Id,
                 Username = sample.CreatedBy,
+                Value = sample.Value
             };
         }
     }

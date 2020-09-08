@@ -9,5 +9,6 @@ namespace PMDEvers.CQRS.Sample.Application.Responses
     {
         public Guid Id { get; set; }
         public string Username { get; set; }
+        public string Value { get; set; }
     }
 }

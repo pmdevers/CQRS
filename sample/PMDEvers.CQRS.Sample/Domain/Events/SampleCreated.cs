@@ -9,5 +9,7 @@ namespace PMDEvers.CQRS.Sample.Domain.Events
         public SampleCreated(Guid sampleId) : base(sampleId)
         {
         }
+
+        public string value { get; internal set; }
     }
 }

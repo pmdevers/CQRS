@@ -18,6 +18,7 @@ using PMDEvers.CQRS.Sample.Domain;
 using PMDEvers.CQRS.Sample.Domain.Commands;
 using PMDEvers.CQRS.Sample.Domain.Events;
 using PMDEvers.CQRS.Sample.Domain.Handlers;
+using PMDEvers.CQRS.Sample.Domain.Services;
 using PMDEvers.Servicebus;
 
 namespace PMDEvers.CQRS.Sample
@@ -36,6 +37,8 @@ namespace PMDEvers.CQRS.Sample
                     .AddCommandHandler<CreateSample, Guid, CreateSampleHandler>()
                     .AddEventHandler<SampleCreated, SampleCreatedHandler>()
                     .AddInMemoryEventStore();
+
+            services.AddTransient<IExampleService, ExampleService>();
 
             services.AddMvc();
         }
