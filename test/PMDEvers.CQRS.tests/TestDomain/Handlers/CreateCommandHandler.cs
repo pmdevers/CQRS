@@ -22,14 +22,14 @@ namespace PMDEvers.CQRS.tests.TestDomain.Handlers
 
         public Guid Handle(CreateCommand command)
         {
-            var a = Aggregate.Create();
+            var a = _repository.Create();
             _repository.SaveAsync(a, CancellationToken.None);
             return a.Id;
         }
 
         public async Task<Guid> HandleAsync(CreateCommand command)
         {
-            var a = Aggregate.Create();
+            var a = _repository.Create();
             await _repository.SaveAsync(a, CancellationToken.None);
             return a.Id;
         }
@@ -46,7 +46,7 @@ namespace PMDEvers.CQRS.tests.TestDomain.Handlers
 
         public async Task<Guid> HandleAsync(CreateCommand command, CancellationToken cancellationToken = new CancellationToken())
         {
-            var a = Aggregate.Create();
+            var a = _repository.Create();
             await _repository.SaveAsync(a, cancellationToken);
             return a.Id;
         }

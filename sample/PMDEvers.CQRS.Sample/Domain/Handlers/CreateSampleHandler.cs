@@ -10,7 +10,7 @@ using PMDEvers.Servicebus;
 
 namespace PMDEvers.CQRS.Sample.Domain.Handlers
 {
-    public class CreateSampleHandler : ICancellableAsyncCommandHandler<CreateSample>
+    public class CreateSampleHandler : ICancellableAsyncCommandHandler<CreateSample, Guid>
     {
         private readonly IRepository<SampleAggregate> _repository;
 
@@ -19,17 +19,19 @@ namespace PMDEvers.CQRS.Sample.Domain.Handlers
             _repository = repository;
         }
 
-        public async Task HandleAsync(CreateSample command, CancellationToken cancellationToken = new CancellationToken())
+        public async Task<Guid> HandleAsync(CreateSample command, CancellationToken cancellationToken = new CancellationToken())
         {
             cancellationToken.ThrowIfCancellationRequested();
             if (!command.IsValid())
             {
-                return;
+                return Guid.Empty;
             }
 
-            var aggregate = new SampleAggregate();
+            var aggregate = _repository.Create();
 
             await _repository.SaveAsync(aggregate, cancellationToken);
+
+            return aggregate.Id;
         }
     }
 }

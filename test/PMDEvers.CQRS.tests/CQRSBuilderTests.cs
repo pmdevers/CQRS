@@ -89,7 +89,7 @@ namespace PMDEvers.CQRS.tests
 
             var repository = provider.GetService<IRepository<ComplexAggregate>>();
 
-            var result = await repository.Create();
+            var result = repository.Create();
 
             await repository.SaveAsync(result);
 

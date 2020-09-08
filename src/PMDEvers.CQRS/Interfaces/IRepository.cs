@@ -15,6 +15,6 @@ namespace PMDEvers.CQRS.Interfaces
 
         Task SaveAsync(TState aggregate, CancellationToken cancellationToken = default(CancellationToken));
 
-        Task<TState> Create(CancellationToken cancellationToken = default(CancellationToken));
+        TState Create();
     }
 }

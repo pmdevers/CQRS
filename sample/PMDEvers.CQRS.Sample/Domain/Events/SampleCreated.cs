@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using PMDEvers.CQRS.Events;
 
 namespace PMDEvers.CQRS.Sample.Domain.Events
 {
+    [Serializable]
     public class SampleCreated : EventBase
     {
-        public SampleCreated(Guid aggregateId) : base(aggregateId)
+        public SampleCreated(Guid sampleId) : base(sampleId)
         {
         }
     }

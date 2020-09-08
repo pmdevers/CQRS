@@ -1,4 +1,4 @@
-﻿@model PMDEvers.CQRS.Sample.Domain.SampleAggregate
+﻿@model PMDEvers.CQRS.Sample.Application.Responses.SampleResponse
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
@@ -55,7 +55,7 @@
 	<div class="jumbotron">
 		<div class="container">
 			<h1>Sample Created with ID: @Model.Id</h1>
-			<h2>@Model.CreatedBy</h2>
+			<h2>@Model.Username</h2>
 		</div>
 	</div>
 

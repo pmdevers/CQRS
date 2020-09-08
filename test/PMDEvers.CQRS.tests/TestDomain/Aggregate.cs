@@ -4,16 +4,15 @@ namespace PMDEvers.CQRS.tests.TestDomain
 {
     public class Aggregate : AggregateRoot
     {
-        public static Aggregate Create()
-        {
-            var a = new Aggregate();
-            a.ApplyChange(new CreatedEvent(a.Id));
-            return a;
-        }
-
+        
         protected override void RegisterAppliers()
         {
             RegisterApplier<CreatedEvent>(OnCreated);    
+        }
+
+        protected override void Create()
+        {
+            ApplyChange(new CreatedEvent(Id));
         }
 
         private void OnCreated(CreatedEvent e)

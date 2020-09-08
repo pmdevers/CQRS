@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Domain\Commands\" />
+    <Folder Include="Domain\Handlers\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

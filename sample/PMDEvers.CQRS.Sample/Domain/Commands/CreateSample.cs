@@ -7,7 +7,7 @@ using PMDEvers.CQRS.Commands;
 
 namespace PMDEvers.CQRS.Sample.Domain.Commands
 {
-    public class CreateSample : CommandBase
+    public class CreateSample : CommandBase<Guid>
     {
         public CreateSample() : base(Guid.NewGuid())
         {

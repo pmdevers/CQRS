@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 using PMDEvers.CQRS.Interfaces;
+using PMDEvers.CQRS.Sample.Application.Queries;
 using PMDEvers.CQRS.Sample.Domain;
 using PMDEvers.CQRS.Sample.Domain.Commands;
 using PMDEvers.Servicebus;
@@ -34,17 +35,17 @@ namespace PMDEvers.CQRS.Sample.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Index(Guid id)
         {
-            var aggregate = await _repository.GetCurrentStateAsync(id, Request.HttpContext.RequestAborted);
-            return View("Index2", aggregate);
+            var response = await _serviceBus.QueryAsync(new GetSample() {SampleId = id});
+            return View("Index2", response);
         }
 
         public async Task<IActionResult> Create()
         {
             var command = new CreateSample();
 
-            await _serviceBus.SendAsync(command, Response.HttpContext.RequestAborted);
+            var id = await _serviceBus.SendAsync<Guid>(command, Response.HttpContext.RequestAborted);
 
-            return RedirectToAction("Index", new { id = command.AggregateId });
+            return RedirectToAction("Index", new { id });
         }
     }
 }

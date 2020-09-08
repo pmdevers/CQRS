@@ -15,5 +15,10 @@ namespace PMDEvers.CQRS.tests
         {
             
         }
+
+        protected override void Create()
+        {
+            
+        }
     }
 }

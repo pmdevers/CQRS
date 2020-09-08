@@ -51,6 +51,11 @@ namespace PMDEvers.CQRS.tests
             RegisterApplier<TestCreated>(CreateTest);
         }
 
+        protected override void Create()
+        {
+            
+        }
+
         private void CreateTest(TestCreated obj)
         {
             Title = obj.Title;

@@ -8,9 +8,15 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 using PMDEvers.CQRS.Builder;
+using PMDEvers.CQRS.Events;
 using PMDEvers.CQRS.InMemory;
+using PMDEvers.CQRS.Sample.Application.Handlers;
+using PMDEvers.CQRS.Sample.Application.Queries;
+using PMDEvers.CQRS.Sample.Application.Responses;
+using PMDEvers.CQRS.Sample.Data.Handlers;
 using PMDEvers.CQRS.Sample.Domain;
 using PMDEvers.CQRS.Sample.Domain.Commands;
+using PMDEvers.CQRS.Sample.Domain.Events;
 using PMDEvers.CQRS.Sample.Domain.Handlers;
 using PMDEvers.Servicebus;
 
@@ -26,7 +32,9 @@ namespace PMDEvers.CQRS.Sample
             
             services.AddCQRS(opt => opt.UsernameAccessor = () => "New User")
                     .AddAggregate<SampleAggregate>()
-                    .AddCommandHandler<CreateSample, CreateSampleHandler>()
+                    .AddQueryHandler<GetSample, SampleResponse, GetSampleHandler>()
+                    .AddCommandHandler<CreateSample, Guid, CreateSampleHandler>()
+                    .AddEventHandler<SampleCreated, SampleCreatedHandler>()
                     .AddInMemoryEventStore();
 
             services.AddMvc();

@@ -20,7 +20,6 @@ namespace PMDEvers.CQRS
             Id = Guid.NewGuid();
             _changes = new List<EventBase>();
             _eventAppliers = new Dictionary<Type, Action<EventBase>>();
-            RegisterApplier<AggregateCreated>(Apply);
             RegisterAppliers();
         }
 
@@ -33,6 +32,7 @@ namespace PMDEvers.CQRS
         public string LastModifiedBy { get; private set; }
 
         protected abstract void RegisterAppliers();
+        protected abstract void Create();
 
         public TEvent GetLastEventOf<TEvent>() where TEvent : EventBase
         {
@@ -132,13 +132,9 @@ namespace PMDEvers.CQRS
             return true;
         }
 
-        public virtual void Apply(AggregateCreated e)
+        internal void CreateAggregate()
         {
-            Id = e.AggregateId;
-            CreatedBy = e.Username;
-            CreationDate = e.Timestamp.DateTime;
-            LastModifiedBy = e.Username;
-            LastModifiedDate = e.Timestamp.DateTime;
+            Create();
         }
     }
 }
