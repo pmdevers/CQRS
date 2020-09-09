@@ -32,6 +32,9 @@ namespace PMDEvers.CQRS.TestTools
 
             Setup();
 
+            MockRepository.Setup(x => x.Create())
+                .Returns(Aggregate);
+
             MockRepository.Setup(x => x.GetCurrentStateAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
                           .ReturnsAsync(Aggregate);
 
