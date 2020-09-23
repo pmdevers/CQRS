@@ -73,14 +73,14 @@ jobs:
           dotnet-version: 3.1.301
       - name: Add Github feed
         run: dotnet nuget add source $GITHUB_FEED -n github -u pmdevers -p GH_TOKEN --store-password-in-clear-text
-      - name: Create Release NuGet package
-        run: |
-          arrTag=(${GITHUB_REF//\// })
-          VERSION="${arrTag[2]}"
-          echo Version: $VERSION
-          VERSION="${VERSION//v}"
-          echo Clean Version: $VERSION
-          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg $PROJECT_NAME.sln
+      #- name: Create Release NuGet package
+      #  run: |
+      #    arrTag=(${GITHUB_REF//\// })
+      #    VERSION="${arrTag[2]}"
+      #    echo Version: $VERSION
+      #    VERSION="${VERSION//v}"
+      #    echo Clean Version: $VERSION
+      #    dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg $PROJECT_NAME.sln
       #- name: Push to GitHub Feed
       #  run: dotnet nuget push ./nupkg/*.nupkg ./nupkg/*.nupkg --source "github"
       - name: Push to NuGet Feed
