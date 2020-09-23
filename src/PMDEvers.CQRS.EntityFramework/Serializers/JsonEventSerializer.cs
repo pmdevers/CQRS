@@ -14,7 +14,7 @@ namespace PMDEvers.CQRS.EntityFramework.Serializers
         {
             var setting = new JsonSerializerSettings
             {
-TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameHandling = TypeNameHandling.Objects,
                 TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
             };
             return JsonConvert.SerializeObject(@event, setting);
