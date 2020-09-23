@@ -47,18 +47,18 @@ jobs:
         with:
           name: nupkg
           path: ./src/**/bin/Release/*.nupkg
-  prerelease:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v1
-        with:
-          name: nupkg
-      - name: NuGet push
-        run: |
-          dotnet nuget add source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --name github --username ${{ github.repository_owner }} --password ${{ github.token }} --store-password-in-clear-text
-          dotnet nuget push **/*.nupkg --source github --skip-duplicate
+  #prerelease:
+  #  needs: build
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Download Artifact
+  #      uses: actions/download-artifact@v1
+  #      with:
+  #        name: nupkg
+  #    - name: NuGet push
+  #      run: |
+  #        dotnet nuget add source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --name github --username ${{ github.repository_owner }} --password ${{ github.token }} --store-password-in-clear-text
+  #        dotnet nuget push **/*.nupkg --source github --skip-duplicate
   deploy:
     needs: build
     runs-on: ubuntu-latest
