@@ -80,7 +80,7 @@ jobs:
           echo Version: $VERSION
           VERSION="${VERSION//v}"
           echo Clean Version: $VERSION
-          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg src/$PROJECT_NAME/$PROJECT_NAME.*proj
+          dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o nupkg $PROJECT_NAME.sln
       #- name: Push to GitHub Feed
       #  run: dotnet nuget push ./nupkg/*.nupkg ./nupkg/*.nupkg --source "github"
       - name: Push to NuGet Feed
