@@ -83,5 +83,11 @@ jobs:
           dotnet pack -v normal -c Release --include-symbols --include-source -p:PackageVersion=$VERSION -o .
       #- name: Push to GitHub Feed
       #  run: dotnet nuget push ./nupkg/*.nupkg ./nupkg/*.nupkg --source "github"
-      - name: Push to NuGet Feed
-        run: dotnet nuget push *.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
+      - name: Push 'PMDEvers.CQRS' to NuGet Feed
+        run: dotnet nuget push PMDEvers.CQRS.*.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
+      - name: Push 'PMDEvers.CQRS.EntityFramework' to NuGet Feed
+        run: dotnet nuget push PMDEvers.CQRS.EntityFramework.*.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
+      - name: Push 'PMDEvers.CQRS.InMemory' to NuGet Feed
+        run: dotnet nuget push PMDEvers.CQRS.InMemory.*.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
+      - name: Push 'PMDEvers.CQRS.TestTools' to NuGet Feed
+        run: dotnet nuget push PMDEvers.CQRS.TestTools.*.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
