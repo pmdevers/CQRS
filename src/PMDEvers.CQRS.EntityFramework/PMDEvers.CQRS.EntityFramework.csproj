@@ -17,7 +17,7 @@
   </ItemGroup>
 	
 	<ItemGroup>
-	  <ProjectReference Include="..\Pmdevers.CQRS\PMDEvers.CQRS.csproj" />
+	  <ProjectReference Include="..\PMDEvers.CQRS\PMDEvers.CQRS.csproj" />
 	</ItemGroup>
 
 </Project>

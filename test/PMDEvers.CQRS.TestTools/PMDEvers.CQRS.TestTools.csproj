@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Pmdevers.CQRS\PMDEvers.CQRS.csproj" />
+    <ProjectReference Include="..\..\src\PMDEvers.CQRS\PMDEvers.CQRS.csproj" />
   </ItemGroup>
 
 </Project>

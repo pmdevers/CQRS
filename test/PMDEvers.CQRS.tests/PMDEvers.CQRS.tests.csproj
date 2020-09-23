@@ -17,7 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\PMDEvers.CQRS.EntityFramework\PMDEvers.CQRS.EntityFramework.csproj" />
     <ProjectReference Include="..\..\src\PMDEvers.CQRS.InMemory\PMDEvers.CQRS.InMemory.csproj" />
-    <ProjectReference Include="..\..\src\Pmdevers.CQRS\PMDEvers.CQRS.csproj" />
+    <ProjectReference Include="..\..\src\PMDEvers.CQRS\PMDEvers.CQRS.csproj" />
     <ProjectReference Include="..\PMDEvers.CQRS.TestTools\PMDEvers.CQRS.TestTools.csproj" />
   </ItemGroup>
 
