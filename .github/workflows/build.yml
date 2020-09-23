@@ -71,8 +71,8 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
-      - name: Add Github feed
-        run: dotnet nuget add source $GITHUB_FEED -n github -u pmdevers -p GH_TOKEN --store-password-in-clear-text
+      #- name: Add Github feed
+      #  run: dotnet nuget add source $GITHUB_FEED -n github -u pmdevers -p GH_TOKEN --store-password-in-clear-text
       - name: Create Release NuGet package
         run: |
           arrTag=(${GITHUB_REF//\// })
