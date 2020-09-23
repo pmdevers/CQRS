@@ -55,12 +55,10 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: nupkg
-      - name: Add Github feed
-        run: dotnet nuget add source $GITHUB_FEED -n github -u pmdevers -p GH_TOKEN --store-password-in-clear-text
-      #- name: Push to GitHub Feed
-      #  run: dotnet nuget push ./nupkg/*.nupkg --source "github"
-      #- name: Push to NuGet Feed
-      #  run: dotnet nuget push ./nupkg/*.nupkg --source $NUGET_FEED --skip-duplicate --api-key $NUGET_KEY
+      - name: NuGet push
+        run: |
+          dotnet nuget add source https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json --name github --username ${{ github.repository_owner }} --password ${{ github.token }} --store-password-in-clear-text
+          dotnet nuget push **/*.nupkg --source github
   deploy:
     needs: build
     runs-on: ubuntu-latest
